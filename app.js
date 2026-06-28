@@ -386,6 +386,26 @@ btnDownload.addEventListener("click", () => {
   btnDownload.disabled = true;
   btnDownload.textContent = "Generating...";
 
+  const isMobile = window.innerWidth <= 1000 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  let newTab = null;
+  if (isMobile) {
+    // Open tab synchronously to bypass Safari/Chrome popup blockers
+    newTab = window.open('', '_blank');
+    if (newTab) {
+      newTab.document.write(`
+        <html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Generating...</title>
+          </head>
+          <body style="background:#111; color:#fff; display:flex; align-items:center; justify-content:center; height:100vh; font-family:sans-serif; margin:0;">
+            <h3>画像を生成中... しばらくお待ちください</h3>
+          </body>
+        </html>
+      `);
+    }
+  }
+
   // Using html2canvas to render the CD composition
   document.fonts.ready.then(() => {
     html2canvas(cdComposition, {
@@ -397,21 +417,37 @@ btnDownload.addEventListener("click", () => {
       windowWidth: 900,
       windowHeight: 900
     }).then(canvas => {
-    const dataUrl = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    const charName = inputName.value.trim() || "ff14-character";
-    link.download = `${charName}_cd_jacket.png`;
-    link.href = dataUrl;
-    link.click();
+      const dataUrl = canvas.toDataURL("image/png");
+      const charName = inputName.value.trim() || "ff14-character";
 
-    btnDownload.disabled = false;
-    btnDownload.innerHTML = originalBtnText;
-  }).catch(err => {
-    console.error("Failed to generate image:", err);
-    alert("Generation failed. Please try again.");
-    btnDownload.disabled = false;
-    btnDownload.innerHTML = originalBtnText;
-  });
+      if (isMobile && newTab) {
+        newTab.document.body.innerHTML = `
+          <style>
+            body { margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #111; color: #fff; font-family: sans-serif; text-align: center; }
+            img { max-width: 95vw; max-height: 80vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; }
+            p { padding: 15px; margin: 0 0 15px 0; font-size: 15px; font-weight: bold; width: 100%; box-sizing: border-box; }
+          </style>
+          <p>👇 画像を長押しして「写真に追加」または「保存」を選択してください 👇</p>
+          <img src="${dataUrl}" alt="CD Jacket">
+        `;
+        newTab.document.title = "Save CD Jacket";
+      } else {
+        // Fallback for desktop or if popup was blocked
+        const link = document.createElement("a");
+        link.download = `${charName}_cd_jacket.png`;
+        link.href = dataUrl;
+        link.click();
+      }
+
+      btnDownload.disabled = false;
+      btnDownload.innerHTML = originalBtnText;
+    }).catch(err => {
+      console.error("Failed to generate image:", err);
+      if (newTab) newTab.close();
+      alert("Generation failed. Please try again.");
+      btnDownload.disabled = false;
+      btnDownload.innerHTML = originalBtnText;
+    });
   }); // Close document.fonts.ready
 });
 
