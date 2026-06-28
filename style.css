@@ -478,6 +478,12 @@ input[type="color"] {
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
+  transition: text-shadow 0.3s ease;
+}
+
+/* Text shadow toggle logic */
+#cd-composition.show-text-shadow .jacket-overlay {
+  text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.7);
 }
 
 .jacket-top {

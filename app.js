@@ -98,6 +98,7 @@ const cardImageContainer = document.getElementById("card-image-container");
 const imagePlaceholder = document.getElementById("image-placeholder");
 const sliderZoom = document.getElementById("slider-zoom");
 const toggleShadow = document.getElementById("toggle-shadow");
+const toggleTextShadow = document.getElementById("toggle-text-shadow");
 
 const btnDownload = document.getElementById("btn-download");
 const cdComposition = document.getElementById("cd-composition");
@@ -233,6 +234,18 @@ toggleShadow.addEventListener("change", (e) => {
 // Initialize shadow state on load
 if (toggleShadow.checked) {
   cdComposition.classList.add("show-shadow");
+}
+
+// Text Shadow Toggle
+toggleTextShadow.addEventListener("change", (e) => {
+  if (e.target.checked) {
+    cdComposition.classList.add("show-text-shadow");
+  } else {
+    cdComposition.classList.remove("show-text-shadow");
+  }
+});
+if (toggleTextShadow.checked) {
+  cdComposition.classList.add("show-text-shadow");
 }
 
 // Fonts
