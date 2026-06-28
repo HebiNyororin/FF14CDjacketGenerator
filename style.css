@@ -8,20 +8,34 @@
   --border-color: #e0e0e0;
   --accent: #4361ee;
   
-  --preview-scale: 1;
+  /* Fluid scale calculation. Max scale is 1. */
+  /* On desktop: available width is 100vw - 350px(panel) - 100px(gaps/padding/scrollbar). */
+  --preview-scale: min(1, calc((100vw - 450px) / 900));
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-@media (max-width: 1400px) { :root { --preview-scale: 0.9; } }
-@media (max-width: 1200px) { :root { --preview-scale: 0.75; } }
-@media (max-width: 1000px) { :root { --preview-scale: 0.9; } }
-@media (max-width: 900px)  { :root { --preview-scale: 0.8; } }
-@media (max-width: 800px)  { :root { --preview-scale: 0.7; } }
-@media (max-width: 700px)  { :root { --preview-scale: 0.6; } }
-@media (max-width: 600px)  { :root { --preview-scale: 0.5; } }
-@media (max-width: 500px)  { :root { --preview-scale: 0.42; } }
-@media (max-width: 400px)  { :root { --preview-scale: 0.35; } }
-@media (max-width: 350px)  { :root { --preview-scale: 0.3; } }
+@media (max-width: 1000px) {
+  :root {
+    /* On mobile: panel is below, so available width is 100vw - 50px(padding/scrollbar). */
+    --preview-scale: min(1, calc((100vw - 50px) / 900));
+  }
+}
+
+/* Custom Scrollbar for Windows */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.3);
+}
 
 * { box-sizing: border-box; }
 
@@ -182,15 +196,17 @@ input[type="color"] {
 
 .font-radio { display: none; }
 .font-btn {
-  display: block;
-  text-align: center;
-  padding: 0.5rem 0.2rem;
-  background: var(--bg-color);
+  background: #f0f0f5;
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 0.75rem;
+  padding: 0.5rem 0.1rem; /* reduced padding to fit longer names */
+  border-radius: 4px;
   cursor: pointer;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
   transition: all 0.2s;
+  word-break: break-word; /* ensure long names don't break layout */
 }
 .font-btn:hover { background: #ebebeb; }
 .font-radio:checked + .font-btn {
