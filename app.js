@@ -387,13 +387,16 @@ btnDownload.addEventListener("click", () => {
   btnDownload.textContent = "Generating...";
 
   // Using html2canvas to render the CD composition
-  html2canvas(cdComposition, {
-    scale: 2,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: null,
-    logging: false
-  }).then(canvas => {
+  document.fonts.ready.then(() => {
+    html2canvas(cdComposition, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null,
+      logging: false,
+      windowWidth: 900,
+      windowHeight: 900
+    }).then(canvas => {
     const dataUrl = canvas.toDataURL("image/png");
     const link = document.createElement("a");
     const charName = inputName.value.trim() || "ff14-character";
@@ -409,6 +412,7 @@ btnDownload.addEventListener("click", () => {
     btnDownload.disabled = false;
     btnDownload.innerHTML = originalBtnText;
   });
+  }); // Close document.fonts.ready
 });
 
 // Run Init

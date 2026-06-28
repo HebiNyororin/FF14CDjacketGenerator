@@ -327,7 +327,7 @@ input[type="color"] {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start; /* Align left side of the right half */
-  padding: 40px 40px 40px 280px; /* Padding left to avoid center hole and center content on the right */
+  padding: 40px 40px 40px 240px; /* Shift content left */
   z-index: 20;
 }
 
