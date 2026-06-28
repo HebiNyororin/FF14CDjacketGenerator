@@ -97,6 +97,7 @@ const cardImage = document.getElementById("card-image");
 const cardImageContainer = document.getElementById("card-image-container");
 const imagePlaceholder = document.getElementById("image-placeholder");
 const sliderZoom = document.getElementById("slider-zoom");
+const toggleShadow = document.getElementById("toggle-shadow");
 
 const btnDownload = document.getElementById("btn-download");
 const cdComposition = document.getElementById("cd-composition");
@@ -220,6 +221,19 @@ colorJacket.addEventListener("input", updateColors);
 colorDisc.addEventListener("input", updateColors);
 colorText.addEventListener("input", updateColors);
 colorBg.addEventListener("input", updateColors);
+
+// Shadow Toggle
+toggleShadow.addEventListener("change", (e) => {
+  if (e.target.checked) {
+    document.body.classList.add("show-shadow");
+  } else {
+    document.body.classList.remove("show-shadow");
+  }
+});
+// Initialize shadow state on load
+if (toggleShadow.checked) {
+  document.body.classList.add("show-shadow");
+}
 
 // Fonts
 document.querySelectorAll('input[name="font"]').forEach(radio => {
