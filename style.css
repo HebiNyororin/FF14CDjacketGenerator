@@ -505,6 +505,6 @@ footer {
 }
 
 @media (max-width: 1000px) {
-  .container { flex-direction: column; }
+  .container { flex-direction: column-reverse; }
   .panel { flex: none; max-height: none; }
 }
