@@ -408,7 +408,7 @@ cardImageContainer.addEventListener("wheel", (e) => {
 
 
 // Export
-btnDownload.addEventListener("click", () => {
+btnDownload.addEventListener("click", async () => {
   const originalBtnText = btnDownload.innerHTML;
   btnDownload.disabled = true;
   btnDownload.textContent = "Generating...";
@@ -438,6 +438,13 @@ btnDownload.addEventListener("click", () => {
   const originalTransform = scaleWrapper ? scaleWrapper.style.transform : '';
   if (scaleWrapper) {
     scaleWrapper.style.transform = 'none';
+  }
+
+  // Ensure all fonts are fully loaded before rendering
+  try {
+    await document.fonts.ready;
+  } catch (err) {
+    console.warn("Font loading wait failed:", err);
   }
 
   // Using modern-screenshot to render the CD composition flawlessly
