@@ -333,7 +333,7 @@ input[type="color"] {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start; /* Align left side of the right half */
-  padding: 40px 40px 40px 290px; /* Shift right to clear the jacket's 35px drop shadow */
+  padding: 40px 40px 40px 265px; /* Shift right just enough to clear the jacket (jacket ends at 260px in disc coords) */
   z-index: 20;
 }
 
