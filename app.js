@@ -408,42 +408,23 @@ btnDownload.addEventListener("click", () => {
 
   // Using html2canvas to render the CD composition
   document.fonts.ready.then(() => {
-    // Create an unscaled, fixed container to bypass mobile transform bugs
-    const cloneContainer = document.createElement("div");
-    cloneContainer.style.position = "fixed";
-    cloneContainer.style.top = "0";
-    cloneContainer.style.left = "0";
-    cloneContainer.style.width = "900px";
-    cloneContainer.style.height = "900px";
-    cloneContainer.style.transform = "none";
-    cloneContainer.style.zIndex = "-9999";
-    cloneContainer.style.opacity = "0"; // Invisible but rendered
-    cloneContainer.style.pointerEvents = "none";
-    
-    // Deep clone the composition (copies inline styles like background image)
-    const clone = cdComposition.cloneNode(true);
-    
-    // Explicitly bind the dynamic CSS variables to the clone so they aren't lost in SVG conversion
-    clone.style.setProperty('--jacket-color', document.documentElement.style.getPropertyValue('--jacket-color'));
-    clone.style.setProperty('--disc-color', document.documentElement.style.getPropertyValue('--disc-color'));
-    clone.style.setProperty('--text-color', document.documentElement.style.getPropertyValue('--text-color'));
-    clone.style.setProperty('--card-bg-color', document.documentElement.style.getPropertyValue('--card-bg-color'));
-
-    cloneContainer.appendChild(clone);
-    document.body.appendChild(cloneContainer);
-
-    // Wait a tiny bit for the browser to apply CSS to the clone
-    setTimeout(() => {
-      domtoimage.toPng(clone, {
-        width: 1800,
-        height: 1800,
-        style: {
-          transform: 'scale(2)',
-          transformOrigin: 'top left'
+    html2canvas(cdComposition, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null,
+      logging: false,
+      windowWidth: 900,
+      windowHeight: 900,
+      onclone: (clonedDoc) => {
+        // Remove the scale transform from the cloned document to prevent coordinate garbling
+        const scaleWrapper = clonedDoc.querySelector('.preview-scale-wrapper');
+        if (scaleWrapper) {
+          scaleWrapper.style.transform = 'none';
         }
-      }).then(dataUrl => {
-        // Cleanup clone
-        document.body.removeChild(cloneContainer);
+      }
+    }).then(canvas => {
+      const dataUrl = canvas.toDataURL("image/png");
       const charName = inputName.value.trim() || "ff14-character";
 
       if (isMobile && newTab) {
@@ -474,7 +455,6 @@ btnDownload.addEventListener("click", () => {
       btnDownload.disabled = false;
       btnDownload.innerHTML = originalBtnText;
     });
-    }, 50); // Close setTimeout
   }); // Close document.fonts.ready
 });
 
