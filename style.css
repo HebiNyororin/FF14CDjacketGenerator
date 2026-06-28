@@ -358,6 +358,20 @@ input[type="color"] {
   gap: 5px;
 }
 
+/* Specific layout for Jobs list: 2 per line, main job 1 per line */
+#card-jobs-list-val {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: flex-start;
+  gap: 5px;
+}
+#card-jobs-list-val .disc-job-badge {
+  justify-self: start;
+}
+#card-jobs-list-val .disc-job-badge.is-main {
+  grid-column: 1 / -1;
+}
+
 /* Disc Badges (Jobs/Playstyles) */
 .disc-badge {
   display: inline-flex;
