@@ -89,7 +89,8 @@ const cardTimeDisplay = document.getElementById("card-time-display");
 
 const colorJacket = document.getElementById("color-jacket");
 const colorDisc = document.getElementById("color-disc");
-const colorText = document.getElementById("color-text");
+const colorTextJacket = document.getElementById("color-text-jacket");
+const colorTextDisc = document.getElementById("color-text-disc");
 const colorBg = document.getElementById("color-bg");
 
 const inputImage = document.getElementById("input-image");
@@ -214,13 +215,15 @@ function hexToRgb(hex) {
 function updateColors() {
   document.documentElement.style.setProperty('--jacket-color', colorJacket.value);
   document.documentElement.style.setProperty('--disc-color', colorDisc.value);
-  document.documentElement.style.setProperty('--text-color', colorText.value);
+  document.documentElement.style.setProperty('--jacket-text-color', colorTextJacket.value);
+  document.documentElement.style.setProperty('--disc-text-color', colorTextDisc.value);
   document.documentElement.style.setProperty('--card-bg-color', colorBg.value);
-  document.documentElement.style.setProperty('--text-color-rgb', hexToRgb(colorText.value));
+  document.documentElement.style.setProperty('--disc-text-color-rgb', hexToRgb(colorTextDisc.value));
 }
 colorJacket.addEventListener("input", updateColors);
 colorDisc.addEventListener("input", updateColors);
-colorText.addEventListener("input", updateColors);
+colorTextJacket.addEventListener("input", updateColors);
+colorTextDisc.addEventListener("input", updateColors);
 colorBg.addEventListener("input", updateColors);
 
 // Shadow Toggle
