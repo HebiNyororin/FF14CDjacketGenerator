@@ -406,64 +406,62 @@ btnDownload.addEventListener("click", () => {
     }
   }
 
+  // Temporarily remove scaling from the wrapper to ensure html2canvas calculates coordinates correctly
+  const scaleWrapper = document.querySelector('.preview-scale-wrapper');
+  const originalTransform = scaleWrapper ? scaleWrapper.style.transform : '';
+  if (scaleWrapper) {
+    scaleWrapper.style.transform = 'none';
+  }
+
   // Using html2canvas to render the CD composition
-  document.fonts.ready.then(() => {
-    // Temporarily remove scaling from the wrapper to ensure html2canvas calculates coordinates correctly
-    const scaleWrapper = document.querySelector('.preview-scale-wrapper');
-    const originalTransform = scaleWrapper ? scaleWrapper.style.transform : '';
+  html2canvas(cdComposition, {
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: null,
+    logging: false,
+    windowWidth: 900,
+    windowHeight: 900
+  }).then(canvas => {
+    // Restore the scaling immediately
     if (scaleWrapper) {
-      scaleWrapper.style.transform = 'none';
+      scaleWrapper.style.transform = originalTransform;
+    }
+    const dataUrl = canvas.toDataURL("image/png");
+    const charName = inputName.value.trim() || "ff14-character";
+
+    if (isMobile && newTab) {
+      newTab.document.body.innerHTML = `
+        <style>
+          body { margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #111; color: #fff; font-family: sans-serif; text-align: center; }
+          img { max-width: 95vw; max-height: 80vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; }
+          p { padding: 15px; margin: 0 0 15px 0; font-size: 15px; font-weight: bold; width: 100%; box-sizing: border-box; }
+        </style>
+        <p>👇 画像を長押しして「写真に追加」または「保存」を選択してください 👇</p>
+        <img src="${dataUrl}" alt="CD Jacket">
+      `;
+      newTab.document.title = "Save CD Jacket";
+    } else {
+      // Fallback for desktop or if popup was blocked
+      const link = document.createElement("a");
+      link.download = `${charName}_cd_jacket.png`;
+      link.href = dataUrl;
+      link.click();
     }
 
-    html2canvas(cdComposition, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null,
-      logging: false,
-      windowWidth: 900,
-      windowHeight: 900
-    }).then(canvas => {
-      // Restore the scaling immediately
-      if (scaleWrapper) {
-        scaleWrapper.style.transform = originalTransform;
-      }
-      const dataUrl = canvas.toDataURL("image/png");
-      const charName = inputName.value.trim() || "ff14-character";
-
-      if (isMobile && newTab) {
-        newTab.document.body.innerHTML = `
-          <style>
-            body { margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #111; color: #fff; font-family: sans-serif; text-align: center; }
-            img { max-width: 95vw; max-height: 80vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; }
-            p { padding: 15px; margin: 0 0 15px 0; font-size: 15px; font-weight: bold; width: 100%; box-sizing: border-box; }
-          </style>
-          <p>👇 画像を長押しして「写真に追加」または「保存」を選択してください 👇</p>
-          <img src="${dataUrl}" alt="CD Jacket">
-        `;
-        newTab.document.title = "Save CD Jacket";
-      } else {
-        // Fallback for desktop or if popup was blocked
-        const link = document.createElement("a");
-        link.download = `${charName}_cd_jacket.png`;
-        link.href = dataUrl;
-        link.click();
-      }
-
-      btnDownload.disabled = false;
-      btnDownload.innerHTML = originalBtnText;
-    }).catch(err => {
-      // Restore the scaling on error
-      if (scaleWrapper) {
-        scaleWrapper.style.transform = originalTransform;
-      }
-      console.error("Failed to generate image:", err);
-      if (newTab) newTab.close();
-      alert("Generation failed. Please try again.");
-      btnDownload.disabled = false;
-      btnDownload.innerHTML = originalBtnText;
-    });
-  }); // Close document.fonts.ready
+    btnDownload.disabled = false;
+    btnDownload.innerHTML = originalBtnText;
+  }).catch(err => {
+    // Restore the scaling on error
+    if (scaleWrapper) {
+      scaleWrapper.style.transform = originalTransform;
+    }
+    console.error("Failed to generate image:", err);
+    if (newTab) newTab.close();
+    alert("Generation failed. Please try again.");
+    btnDownload.disabled = false;
+    btnDownload.innerHTML = originalBtnText;
+  });
 });
 
 // Run Init
