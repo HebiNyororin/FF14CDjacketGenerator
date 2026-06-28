@@ -431,11 +431,7 @@ btnDownload.addEventListener("click", () => {
   modernScreenshot.domToPng(cdComposition, {
     scale: 2,
     width: 900,
-    height: 900,
-    backgroundColor: 'transparent',
-    style: {
-      background: 'transparent'
-    }
+    height: 900
   }).then(dataUrl => {
     // Restore the scaling immediately
     if (scaleWrapper) {
@@ -448,12 +444,8 @@ btnDownload.addEventListener("click", () => {
         <style>
           body { 
             margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; 
-            /* Checkered background to indicate transparency */
-            background-color: #f0f0f0;
-            background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-            color: #333; font-family: sans-serif; text-align: center; 
+            background-color: #111;
+            color: #fff; font-family: sans-serif; text-align: center; 
           }
           img { max-width: 95vw; max-height: 80vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; background: transparent; }
           p { padding: 15px; margin: 0 0 15px 0; font-size: 15px; font-weight: bold; width: 100%; box-sizing: border-box; background: rgba(255,255,255,0.8); }
