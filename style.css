@@ -273,11 +273,11 @@ input[type="color"] {
   z-index: 5;
   border-radius: 50%;
   background-color: var(--disc-color);
-  transition: box-shadow 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
-body.show-shadow .cd-disc-wrapper {
-  box-shadow: 15px 20px 15px rgba(0,0,0,0.25);
+#cd-composition.show-shadow .cd-disc-wrapper {
+  filter: drop-shadow(15px 20px 10px rgba(0,0,0,0.4));
 }
 
 .cd-disc {
@@ -403,12 +403,12 @@ body.show-shadow .cd-disc-wrapper {
   background-color: var(--jacket-color);
   z-index: 10;
   border-radius: 0; /* Sharp corners */
-  transition: box-shadow 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
-/* Shadow toggle logic */
-body.show-shadow .cd-jacket {
-  box-shadow: 15px 25px 20px rgba(0,0,0,0.3);
+/* Shadow toggle logic using filter to prevent iOS Safari detach bug */
+#cd-composition.show-shadow .cd-jacket {
+  filter: drop-shadow(15px 25px 15px rgba(0,0,0,0.4));
 }
 
 /* Acrylic effect */

@@ -225,14 +225,14 @@ colorBg.addEventListener("input", updateColors);
 // Shadow Toggle
 toggleShadow.addEventListener("change", (e) => {
   if (e.target.checked) {
-    document.body.classList.add("show-shadow");
+    cdComposition.classList.add("show-shadow");
   } else {
-    document.body.classList.remove("show-shadow");
+    cdComposition.classList.remove("show-shadow");
   }
 });
 // Initialize shadow state on load
 if (toggleShadow.checked) {
-  document.body.classList.add("show-shadow");
+  cdComposition.classList.add("show-shadow");
 }
 
 // Fonts
