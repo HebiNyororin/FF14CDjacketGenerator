@@ -413,21 +413,19 @@ btnDownload.addEventListener("click", () => {
     scaleWrapper.style.transform = 'none';
   }
 
-  // Using html2canvas to render the CD composition
-  html2canvas(cdComposition, {
+  // Using modern-screenshot to render the CD composition flawlessly (supports shadows perfectly)
+  modernScreenshot.domToPng(cdComposition, {
     scale: 2,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: null,
-    logging: false,
-    windowWidth: 900,
-    windowHeight: 900
-  }).then(canvas => {
+    width: 900,
+    height: 900,
+    style: {
+      background: 'transparent'
+    }
+  }).then(dataUrl => {
     // Restore the scaling immediately
     if (scaleWrapper) {
       scaleWrapper.style.transform = originalTransform;
     }
-    const dataUrl = canvas.toDataURL("image/png");
     const charName = inputName.value.trim() || "ff14-character";
 
     if (isMobile && newTab) {
