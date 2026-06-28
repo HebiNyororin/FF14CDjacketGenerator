@@ -406,24 +406,27 @@ btnDownload.addEventListener("click", () => {
     }
   }
 
+  // Temporarily remove scaling from the wrapper to ensure html2canvas calculates coordinates correctly
+  const scaleWrapper = document.querySelector('.preview-scale-wrapper');
+  const originalTransform = scaleWrapper ? scaleWrapper.style.transform : '';
+  if (scaleWrapper) {
+    scaleWrapper.style.transform = 'none';
+  }
+
   // Using html2canvas to render the CD composition
-  document.fonts.ready.then(() => {
-    html2canvas(cdComposition, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null,
-      logging: false,
-      windowWidth: 900,
-      windowHeight: 900,
-      onclone: (clonedDoc) => {
-        // Remove the scale transform from the cloned document to prevent coordinate garbling
-        const scaleWrapper = clonedDoc.querySelector('.preview-scale-wrapper');
-        if (scaleWrapper) {
-          scaleWrapper.style.transform = 'none';
-        }
-      }
-    }).then(canvas => {
+  html2canvas(cdComposition, {
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: null,
+    logging: false,
+    windowWidth: 900,
+    windowHeight: 900
+  }).then(canvas => {
+    // Restore the scaling immediately
+    if (scaleWrapper) {
+      scaleWrapper.style.transform = originalTransform;
+    }
       const dataUrl = canvas.toDataURL("image/png");
       const charName = inputName.value.trim() || "ff14-character";
 
@@ -449,13 +452,16 @@ btnDownload.addEventListener("click", () => {
       btnDownload.disabled = false;
       btnDownload.innerHTML = originalBtnText;
     }).catch(err => {
+      // Restore the scaling on error
+      if (scaleWrapper) {
+        scaleWrapper.style.transform = originalTransform;
+      }
       console.error("Failed to generate image:", err);
       if (newTab) newTab.close();
       alert("Generation failed. Please try again.");
       btnDownload.disabled = false;
       btnDownload.innerHTML = originalBtnText;
     });
-  }); // Close document.fonts.ready
 });
 
 // Run Init
