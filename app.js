@@ -406,27 +406,28 @@ btnDownload.addEventListener("click", () => {
     }
   }
 
-  // Temporarily remove scaling from the wrapper to ensure html2canvas calculates coordinates correctly
-  const scaleWrapper = document.querySelector('.preview-scale-wrapper');
-  const originalTransform = scaleWrapper ? scaleWrapper.style.transform : '';
-  if (scaleWrapper) {
-    scaleWrapper.style.transform = 'none';
-  }
-
   // Using html2canvas to render the CD composition
-  html2canvas(cdComposition, {
-    scale: 2,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: null,
-    logging: false,
-    windowWidth: 900,
-    windowHeight: 900
-  }).then(canvas => {
-    // Restore the scaling immediately
+  document.fonts.ready.then(() => {
+    // Temporarily remove scaling from the wrapper to ensure html2canvas calculates coordinates correctly
+    const scaleWrapper = document.querySelector('.preview-scale-wrapper');
+    const originalTransform = scaleWrapper ? scaleWrapper.style.transform : '';
     if (scaleWrapper) {
-      scaleWrapper.style.transform = originalTransform;
+      scaleWrapper.style.transform = 'none';
     }
+
+    html2canvas(cdComposition, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null,
+      logging: false,
+      windowWidth: 900,
+      windowHeight: 900
+    }).then(canvas => {
+      // Restore the scaling immediately
+      if (scaleWrapper) {
+        scaleWrapper.style.transform = originalTransform;
+      }
       const dataUrl = canvas.toDataURL("image/png");
       const charName = inputName.value.trim() || "ff14-character";
 
@@ -462,6 +463,7 @@ btnDownload.addEventListener("click", () => {
       btnDownload.disabled = false;
       btnDownload.innerHTML = originalBtnText;
     });
+  }); // Close document.fonts.ready
 });
 
 // Run Init
