@@ -422,23 +422,28 @@ btnDownload.addEventListener("click", () => {
     
     // Deep clone the composition (copies inline styles like background image)
     const clone = cdComposition.cloneNode(true);
+    
+    // Explicitly bind the dynamic CSS variables to the clone so they aren't lost in SVG conversion
+    clone.style.setProperty('--jacket-color', document.documentElement.style.getPropertyValue('--jacket-color'));
+    clone.style.setProperty('--disc-color', document.documentElement.style.getPropertyValue('--disc-color'));
+    clone.style.setProperty('--text-color', document.documentElement.style.getPropertyValue('--text-color'));
+    clone.style.setProperty('--card-bg-color', document.documentElement.style.getPropertyValue('--card-bg-color'));
+
     cloneContainer.appendChild(clone);
     document.body.appendChild(cloneContainer);
 
     // Wait a tiny bit for the browser to apply CSS to the clone
     setTimeout(() => {
-      html2canvas(clone, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null,
-        logging: false,
-        windowWidth: 900,
-        windowHeight: 900
-      }).then(canvas => {
+      domtoimage.toPng(clone, {
+        width: 1800,
+        height: 1800,
+        style: {
+          transform: 'scale(2)',
+          transformOrigin: 'top left'
+        }
+      }).then(dataUrl => {
         // Cleanup clone
         document.body.removeChild(cloneContainer);
-      const dataUrl = canvas.toDataURL("image/png");
       const charName = inputName.value.trim() || "ff14-character";
 
       if (isMobile && newTab) {
