@@ -334,7 +334,7 @@ input[type="color"] {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start; /* Align left side of the right half */
-  padding: 60px 70px 60px 265px; /* Increased top/right/bottom padding so content doesn't overflow the circular border */
+  padding: 60px 70px 60px 290px; /* Shifted right to prevent text from being covered by the jacket shadow */
   z-index: 20;
 }
 
