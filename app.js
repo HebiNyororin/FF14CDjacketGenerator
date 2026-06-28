@@ -417,4 +417,24 @@ window.addEventListener("DOMContentLoaded", () => {
   initJobsSelector();
   initPlaystylesSelector();
   updateColors(); // ensure initial color setup
+  updateFluidScale();
 });
+
+// --- Fluid Scale Logic for Responsive Layout ---
+function updateFluidScale() {
+  const isMobile = window.innerWidth <= 1000;
+  let scale = 1;
+  
+  if (isMobile) {
+    // Mobile layout: panel is below, so available width is window - padding
+    scale = (window.innerWidth - 50) / 900;
+  } else {
+    // Desktop layout: panel is side-by-side, so available width is window - panel(350) - gap/padding(100)
+    scale = (window.innerWidth - 450) / 900;
+  }
+  
+  // Clamp scale between 0.2 and 1
+  scale = Math.min(1, Math.max(0.2, scale));
+  document.documentElement.style.setProperty('--preview-scale', scale);
+}
+window.addEventListener("resize", updateFluidScale);
