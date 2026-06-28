@@ -22,6 +22,19 @@
   <main class="container">
     <!-- Control Panel -->
     <aside class="panel">
+      <!-- Section: Image -->
+      <section class="form-group">
+        <h2 class="section-title">Jacket Image</h2>
+        <div class="file-upload">
+          <div class="file-upload-btn">Upload Image</div>
+          <input type="file" id="input-image" accept="image/*">
+        </div>
+        <div class="slider-group mt-2">
+          <label for="slider-zoom">Image Zoom</label>
+          <input type="range" id="slider-zoom" min="0.1" max="3" step="0.05" value="1">
+        </div>
+      </section>
+
       <!-- Section: Colors -->
       <section class="form-group">
         <h2 class="section-title">Design Colors</h2>
@@ -109,18 +122,6 @@
         </div>
       </section>
 
-      <!-- Section: Image -->
-      <section class="form-group">
-        <h2 class="section-title">Jacket Image</h2>
-        <div class="file-upload">
-          <div class="file-upload-btn">Upload Image</div>
-          <input type="file" id="input-image" accept="image/*">
-        </div>
-        <div class="slider-group mt-2">
-          <label for="slider-zoom">Image Zoom</label>
-          <input type="range" id="slider-zoom" min="0.1" max="3" step="0.05" value="1">
-        </div>
-      </section>
 
       <!-- Section: Jobs -->
       <section class="form-group">
