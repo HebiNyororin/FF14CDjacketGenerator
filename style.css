@@ -271,6 +271,7 @@ input[type="color"] {
   height: 480px;
   z-index: 5;
   border-radius: 50%;
+  background-color: var(--disc-color);
   box-shadow: 15px 20px 15px rgba(0,0,0,0.25);
 }
 
@@ -397,7 +398,7 @@ input[type="color"] {
   background-color: var(--jacket-color);
   z-index: 10;
   border-radius: 0; /* Sharp corners */
-  box-shadow: 15px 25px 20px -5px rgba(0,0,0,0.3);
+  box-shadow: 15px 25px 20px rgba(0,0,0,0.3);
 }
 
 /* Acrylic effect */
