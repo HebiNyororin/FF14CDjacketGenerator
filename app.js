@@ -408,15 +408,36 @@ btnDownload.addEventListener("click", () => {
 
   // Using html2canvas to render the CD composition
   document.fonts.ready.then(() => {
-    html2canvas(cdComposition, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null,
-      logging: false,
-      windowWidth: 900,
-      windowHeight: 900
-    }).then(canvas => {
+    // Create an unscaled, fixed container to bypass mobile transform bugs
+    const cloneContainer = document.createElement("div");
+    cloneContainer.style.position = "fixed";
+    cloneContainer.style.top = "0";
+    cloneContainer.style.left = "0";
+    cloneContainer.style.width = "900px";
+    cloneContainer.style.height = "900px";
+    cloneContainer.style.transform = "none";
+    cloneContainer.style.zIndex = "-9999";
+    cloneContainer.style.opacity = "0"; // Invisible but rendered
+    cloneContainer.style.pointerEvents = "none";
+    
+    // Deep clone the composition (copies inline styles like background image)
+    const clone = cdComposition.cloneNode(true);
+    cloneContainer.appendChild(clone);
+    document.body.appendChild(cloneContainer);
+
+    // Wait a tiny bit for the browser to apply CSS to the clone
+    setTimeout(() => {
+      html2canvas(clone, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        logging: false,
+        windowWidth: 900,
+        windowHeight: 900
+      }).then(canvas => {
+        // Cleanup clone
+        document.body.removeChild(cloneContainer);
       const dataUrl = canvas.toDataURL("image/png");
       const charName = inputName.value.trim() || "ff14-character";
 
@@ -448,6 +469,7 @@ btnDownload.addEventListener("click", () => {
       btnDownload.disabled = false;
       btnDownload.innerHTML = originalBtnText;
     });
+    }, 50); // Close setTimeout
   }); // Close document.fonts.ready
 });
 
