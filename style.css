@@ -252,6 +252,8 @@ input[type="color"] {
   justify-content: center;
   color: var(--text-color);
   background-color: var(--card-bg-color);
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
 .cd-inner-wrapper {
@@ -331,23 +333,22 @@ input[type="color"] {
 .disc-section {
   width: 100%;
   text-align: left;
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 }
 .disc-section-title {
-  font-size: 0.65rem;
-  font-family: 'Inter', sans-serif;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 2px;
   opacity: 0.5;
-  margin-bottom: 0.3rem;
+  margin-bottom: 6px;
   border-bottom: 1px solid rgba(var(--text-color-rgb), 0.2);
-  padding-bottom: 0.2rem;
+  padding-bottom: 3px;
 }
 .disc-items-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 0.3rem;
+  gap: 5px;
 }
 
 /* Disc Badges (Jobs/Playstyles) */
@@ -355,14 +356,22 @@ input[type="color"] {
   display: inline-flex;
   align-items: center;
   background: rgba(255,255,255,0.4);
-  padding: 0.2rem 0.6rem;
+  padding: 4px 10px;
   border-radius: 12px;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
   border: 1px solid rgba(var(--text-color-rgb), 0.1);
 }
+.disc-items-list span.placeholder-text {
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(0,0,0,0.05);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
 .disc-job-badge {
-  padding-left: 0.3rem;
+  padding-left: 5px;
 }
 .disc-job-badge img { margin-right: 4px; }
 .disc-job-badge.is-main {
@@ -372,9 +381,10 @@ input[type="color"] {
 }
 .disc-job-badge.is-main img { filter: none; } /* Invert icon if it's dark text color */
 
-.disc-time-display {
-  font-weight: 600;
-  font-size: 0.9rem;
+.disc-time-display span {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 /* CD Jacket */
@@ -465,25 +475,26 @@ input[type="color"] {
   align-items: flex-start;
 }
 .jacket-server {
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 1px;
 }
 
 .jacket-bottom {
   text-align: left;
 }
 .jacket-name {
-  font-size: 2.8rem;
+  font-size: 45px;
   font-weight: 800;
   line-height: 1.1;
+  letter-spacing: 1px;
 }
 
 .card-copyright {
   position: absolute;
   bottom: 10px;
   right: 15px;
-  font-size: 0.65rem;
+  font-size: 10px;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
   opacity: 0.6;
