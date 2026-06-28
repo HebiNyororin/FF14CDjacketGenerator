@@ -327,7 +327,7 @@ input[type="color"] {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start; /* Align left side of the right half */
-  padding: 40px 40px 40px 240px; /* Shift content left */
+  padding: 40px 40px 40px 270px; /* Shift content slightly left without overlapping jacket (jacket ends at 260px locally) */
   z-index: 20;
 }
 
