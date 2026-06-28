@@ -1,0 +1,494 @@
+  --jacket-color: #82b1ff;
+  --disc-color: #e3f2fd;
+  --text-color: #1a237e;
+  --card-bg-color: #ffffff;
+  
+  --bg-color: #f5f5f7;
+  --panel-bg: #ffffff;
+  --border-color: #e0e0e0;
+  --accent: #4361ee;
+  
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: var(--panel-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+header h1 { margin: 0; font-size: 1.5rem; color: var(--accent); }
+header p { margin: 0.5rem 0 0; font-size: 0.9rem; color: #666; }
+
+.container {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Control Panel */
+.panel {
+  flex: 0 0 350px;
+  background: var(--panel-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+}
+
+.section-title {
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--bg-color);
+}
+
+.form-group { margin-bottom: 1rem; }
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #555;
+}
+.sub-label { font-size: 0.75rem !important; opacity: 0.8; }
+
+input[type="text"], select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+input[type="color"] {
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
+
+.mt-2 { margin-top: 1rem; }
+.help-text { font-size: 0.75rem; color: #777; margin-bottom: 0.5rem; }
+
+/* File Upload */
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
+.file-upload-btn {
+  background-color: #4361ee !important;
+  color: #ffffff !important;
+  padding: 0.6rem;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.file-upload input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.slider-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.slider-group label { margin: 0; white-space: nowrap; }
+.slider-group input { flex: 1; }
+
+/* Jobs & Playstyles Grid */
+.job-category-title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #888;
+  margin: 1rem 0 0.5rem;
+}
+.jobs-grid, .playstyles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+}
+.jobs-grid input[type="checkbox"], .playstyles-grid input[type="checkbox"] {
+  display: none;
+}
+.job-label, .playstyle-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.2rem;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.job-label:hover, .playstyle-label:hover {
+  background: #ebebeb;
+}
+.jobs-grid input:checked + .job-label,
+.playstyles-grid input:checked + .playstyle-label {
+  background: rgba(67, 97, 238, 0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.job-icon-placeholder img { margin-bottom: 4px; }
+
+
+.font-radio { display: none; }
+.font-btn {
+  display: block;
+  text-align: center;
+  padding: 0.5rem 0.2rem;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.font-btn:hover { background: #ebebeb; }
+.font-radio:checked + .font-btn {
+  background: rgba(67, 97, 238, 0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Font Classes */
+.font-noto-sans { font-family: 'Noto Sans JP', sans-serif; }
+.font-noto-serif { font-family: 'Noto Serif JP', serif; }
+.font-shippori { font-family: 'Shippori Mincho', serif; }
+.font-mplus { font-family: 'M PLUS Rounded 1c', sans-serif; }
+.font-cinzel { font-family: 'Cinzel', serif; }
+.font-playfair { font-family: 'Playfair Display', serif; }
+.font-vibes { font-family: 'Great Vibes', cursive; font-size: 1.1em; }
+.font-cormorant { font-family: 'Cormorant Garamond', serif; }
+.font-sleek { font-family: 'Josefin Sans', 'Zen Kaku Gothic New', sans-serif; }
+
+/* Preview Container */
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.preview-scale-wrapper {
+  transform-origin: top center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  overflow: auto;
+  max-width: 100%;
+}
+
+/* CD Composition */
+#cd-composition {
+  position: relative;
+  width: 900px; 
+  height: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  background-color: var(--card-bg-color);
+}
+
+.cd-inner-wrapper {
+  position: relative;
+  width: 720px;
+  height: 500px;
+}
+
+/* CD Disc */
+.cd-disc-wrapper {
+  position: absolute;
+  top: 10px; /* slightly smaller than jacket */
+  left: 240px; /* slides out to the right */
+  width: 480px;
+  height: 480px;
+  z-index: 5;
+  filter: drop-shadow(20px 25px 15px rgba(0,0,0,0.25));
+}
+
+.cd-disc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--disc-color);
+  overflow: hidden;
+}
+
+/* Vinyl Grooves Effect */
+.disc-grooves {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0,
+    transparent 3px,
+    rgba(0,0,0,0.03) 4px,
+    transparent 5px
+  );
+  pointer-events: none;
+}
+
+/* Center Hole */
+.disc-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: transparent; /* Assuming white background when exported, or keep it disc color with a border to simulate hole */
+  border: 15px solid rgba(255,255,255,0.4);
+  z-index: 10;
+}
+.disc-hole::after {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Disc Content Layout */
+.disc-content {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* Align left side of the right half */
+  padding: 40px 40px 40px 280px; /* Padding left to avoid center hole and center content on the right */
+  z-index: 20;
+}
+
+.disc-section {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.disc-section-title {
+  font-size: 0.65rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(var(--text-color-rgb), 0.2);
+  padding-bottom: 0.2rem;
+}
+.disc-items-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.3rem;
+}
+
+/* Disc Badges (Jobs/Playstyles) */
+.disc-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255,255,255,0.4);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(var(--text-color-rgb), 0.1);
+}
+.disc-job-badge {
+  padding-left: 0.3rem;
+}
+.disc-job-badge img { margin-right: 4px; }
+.disc-job-badge.is-main {
+  background: transparent;
+  color: var(--text-color);
+  border: 2px solid var(--text-color);
+}
+.disc-job-badge.is-main img { filter: none; } /* Invert icon if it's dark text color */
+
+.disc-time-display {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* CD Jacket */
+.cd-jacket {
+  position: absolute;
+  top: 0; left: 0;
+  width: 500px;
+  height: 500px;
+  background-color: var(--jacket-color);
+  z-index: 10;
+  border-radius: 0; /* Sharp corners */
+  overflow: hidden;
+  box-shadow: 15px 25px 20px -5px rgba(0,0,0,0.3);
+}
+
+/* Acrylic effect */
+.cd-jacket::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 0; /* Sharp corners */
+  
+  background: 
+    linear-gradient(to right, 
+      transparent 38px,
+      rgba(0, 0, 0, 0.4) 39px,
+      rgba(255, 255, 255, 0.6) 40px,
+      transparent 41px
+    ),
+    linear-gradient(to bottom, rgba(255,255,255,0.5) 0px, transparent 2px),
+    linear-gradient(to top, rgba(0,0,0,0.3) 0px, transparent 2px),
+    linear-gradient(to left, rgba(0,0,0,0.2) 0px, transparent 2px),
+    linear-gradient(to right, rgba(255,255,255,0.3) 0px, transparent 2px),
+    linear-gradient(115deg, 
+      transparent 0%, 
+      transparent 10%, 
+      rgba(255,255,255,0.15) 15%, 
+      rgba(255,255,255,0.3) 20%, 
+      transparent 25%, 
+      transparent 100%
+    );
+    
+  box-shadow: inset 1px 1px 3px rgba(255,255,255,0.6), inset -1px -1px 3px rgba(0,0,0,0.2);
+  z-index: 20;
+}
+
+/* Inside Jacket Image */
+.jacket-image-container {
+  position: absolute;
+  top: 15px; bottom: 15px; right: 15px; left: 45px;
+  background: rgba(0,0,0,0.1);
+  overflow: hidden;
+  border-radius: 0; /* Sharp corners */
+}
+#card-image {
+  position: absolute;
+  top: 0; left: 0;
+  cursor: grab;
+  transform-origin: top left;
+}
+#card-image:active { cursor: grabbing; }
+
+.jacket-image-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0,0,0,0.4);
+  font-weight: bold;
+}
+
+/* Overlay Text on Jacket */
+.jacket-overlay {
+  position: absolute;
+  top: 15px; bottom: 15px; right: 15px; left: 45px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.jacket-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.jacket-server {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.jacket-bottom {
+  text-align: left;
+}
+.jacket-name {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.card-copyright {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  opacity: 0.6;
+  z-index: 50;
+  letter-spacing: 0.05em;
+}
+
+/* Action Button */
+.action-btn {
+  background-color: #4361ee !important;
+  color: #ffffff !important;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.action-btn:hover { transform: translateY(-2px); }
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+@media (max-width: 1000px) {
+  .container { flex-direction: column; }
+  .panel { flex: none; max-height: none; }
+  .preview-scale-wrapper { transform: scale(0.7); margin: -50px 0; }
+}
+@media (max-width: 600px) {
+  .preview-scale-wrapper { transform: scale(0.45); margin: -100px 0; }
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FF14 CD Jacket Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Google Fonts for 6 types -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&family=M+PLUS+Rounded+1c:wght@700&family=Shippori+Mincho:wght@700&family=Cinzel:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <!-- New Fonts: Cursive, Elegant, Sleek -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@600&family=Josefin+Sans:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>FF14 CD Jacket Generator</h1>
+    <p>Create a stylish CD jacket-style adventurer card</p>
+  </header>
+
+  <main class="container">
+    <!-- Control Panel -->
+    <aside class="panel">
+      <!-- Section: Colors -->
+      <section class="form-group">
+        <h2 class="section-title">Design Colors</h2>
+        <div class="row-2">
+          <div class="form-group">
+            <label for="color-jacket">Jacket Color</label>
+            <input type="color" id="color-jacket" value="#82b1ff">
+          </div>
+          <div class="form-group">
+            <label for="color-disc">Disc Color</label>
+            <input type="color" id="color-disc" value="#e3f2fd">
+          </div>
+          <div class="form-group">
+            <label for="color-text">Text Color</label>
+            <input type="color" id="color-text" value="#1a237e">
+          </div>
+          <div class="form-group">
+            <label for="color-bg">Background Color</label>
+            <input type="color" id="color-bg" value="#ffffff">
+          </div>
+        </div>
+        
+        <div class="form-group mt-2">
+          <label>Font</label>
+          <div class="font-selector" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem;">
+            <input type="radio" name="font" id="font-noto-sans" value="font-noto-sans" checked class="font-radio">
+            <label for="font-noto-sans" class="font-btn">Noto Sans</label>
+
+            <input type="radio" name="font" id="font-noto-serif" value="font-noto-serif" class="font-radio">
+            <label for="font-noto-serif" class="font-btn">Noto Serif</label>
+
+            <input type="radio" name="font" id="font-mplus" value="font-mplus" class="font-radio">
+            <label for="font-mplus" class="font-btn">M PLUS</label>
+
+            <input type="radio" name="font" id="font-shippori" value="font-shippori" class="font-radio">
+            <label for="font-shippori" class="font-btn">Shippori</label>
+
+            <input type="radio" name="font" id="font-cinzel" value="font-cinzel" class="font-radio">
+            <label for="font-cinzel" class="font-btn">Cinzel</label>
+
+            <input type="radio" name="font" id="font-playfair" value="font-playfair" class="font-radio">
+            <label for="font-playfair" class="font-btn">Playfair</label>
+
+            <input type="radio" name="font" id="font-vibes" value="font-vibes" class="font-radio">
+            <label for="font-vibes" class="font-btn">Great Vibes</label>
+
+            <input type="radio" name="font" id="font-cormorant" value="font-cormorant" class="font-radio">
+            <label for="font-cormorant" class="font-btn">Cormorant</label>
+
+            <input type="radio" name="font" id="font-sleek" value="font-sleek" class="font-radio">
+            <label for="font-sleek" class="font-btn">Josefin Sans</label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Basic Info -->
+      <section class="form-group">
+        <h2 class="section-title">Basic Info</h2>
+        <div class="form-group">
+          <label for="input-name">Character Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Name" value="Name">
+        </div>
+        <div class="row-2">
+          <div class="form-group">
+            <label for="select-dc">Data Center</label>
+            <select id="select-dc"></select>
+          </div>
+          <div class="form-group">
+            <label for="select-world">World</label>
+            <select id="select-world"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Active Time</label>
+          <div class="row-2">
+            <div class="form-group">
+              <label for="input-time-start" class="sub-label">From</label>
+              <select id="input-time-start"></select>
+            </div>
+            <div class="form-group">
+              <label for="input-time-end" class="sub-label">To</label>
+              <select id="input-time-end"></select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Image -->
+      <section class="form-group">
+        <h2 class="section-title">Jacket Image</h2>
+        <div class="file-upload">
+          <div class="file-upload-btn">Upload Image</div>
+          <input type="file" id="input-image" accept="image/*">
+        </div>
+        <div class="slider-group mt-2">
+          <label for="slider-zoom">Image Zoom</label>
+          <input type="range" id="slider-zoom" min="0.1" max="3" step="0.05" value="1">
+        </div>
+      </section>
+
+      <!-- Section: Jobs -->
+      <section class="form-group">
+        <h2 class="section-title">Jobs</h2>
+        <p class="help-text">Click a selected job badge on the preview to set it as Main Job.</p>
+        <div id="jobs-container"></div>
+      </section>
+
+      <!-- Section: Playstyle -->
+      <section class="form-group">
+        <h2 class="section-title">Playstyle</h2>
+        <div class="playstyles-grid" id="playstyles-container"></div>
+      </section>
+    </aside>
+
+    <!-- Preview & Download -->
+    <section class="preview-container">
+      <div class="preview-scale-wrapper">
+        <!-- Target for html2canvas -->
+        <div id="cd-composition" class="font-noto-sans">
+          
+          <div class="cd-inner-wrapper">
+            <!-- CD Disc (Right, sliding out) -->
+            <div class="cd-disc-wrapper">
+            <div class="cd-disc">
+              <div class="disc-grooves"></div>
+              <div class="disc-hole"></div>
+              
+              <!-- Disc Content -->
+              <div class="disc-content">
+                
+                <div class="disc-section">
+                  <div class="disc-section-title">JOBS</div>
+                  <div id="card-jobs-list-val" class="disc-items-list">
+                    <span class="placeholder-text">No jobs selected</span>
+                  </div>
+                </div>
+
+                <div class="disc-section">
+                  <div class="disc-section-title">PLAYSTYLES</div>
+                  <div id="card-playstyles-list-val" class="disc-items-list">
+                    <span class="placeholder-text">Not set</span>
+                  </div>
+                </div>
+
+                <div class="disc-section">
+                  <div class="disc-section-title">ACTIVE TIME</div>
+                  <div class="disc-time-display">
+                    <span id="card-time-display">--:00 〜 --:00</span>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <!-- CD Jacket (Left, covers part of disc) -->
+          <div class="cd-jacket">
+            <!-- Image Area -->
+            <div class="jacket-image-container" id="card-image-container">
+              <img id="card-image" src="" alt="Character Image" style="display: none;" draggable="false">
+              <div id="image-placeholder" class="jacket-image-placeholder">
+                <span>Upload Image</span>
+              </div>
+            </div>
+            
+            <!-- Jacket Overlay/Text -->
+            <div class="jacket-overlay">
+              <div class="jacket-top">
+                <div id="card-server-val" class="jacket-server">Mana / Chocobo</div>
+              </div>
+              <div class="jacket-bottom">
+                <div id="card-name-val" class="jacket-name">Name</div>
+              </div>
+            </div>
+            </div>
+          </div>
+          
+          <!-- Copyright -->
+          <div class="card-copyright">© SQUARE ENIX</div>
+
+        </div>
+      </div>
+
+      <button id="btn-download" class="action-btn">Save CD Jacket</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 FF14 CD Jacket Generator. All games, logos, and characters are trademarks of Square Enix.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
