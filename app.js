@@ -267,20 +267,39 @@ document.querySelectorAll('input[name="font"]').forEach(radio => {
 });
 
 // Jobs
+const JOB_LIMIT = 7;
+const PLAYSTYLE_LIMIT = 6;
+
+function updateJobCheckboxStates() {
+  const atLimit = selectedJobs.length >= JOB_LIMIT;
+  document.querySelectorAll('[id^="job-check-"]').forEach(cb => {
+    if (!cb.checked) cb.disabled = atLimit;
+  });
+  // Update counter badge
+  const badge = document.getElementById('job-limit-badge');
+  if (badge) badge.textContent = `${selectedJobs.length} / ${JOB_LIMIT}`;
+}
+
+function updatePlaystyleCheckboxStates() {
+  const atLimit = selectedPlaystyles.length >= PLAYSTYLE_LIMIT;
+  document.querySelectorAll('[id^="playstyle-check-"]').forEach(cb => {
+    if (!cb.checked) cb.disabled = atLimit;
+  });
+  // Update counter badge
+  const badge = document.getElementById('playstyle-limit-badge');
+  if (badge) badge.textContent = `${selectedPlaystyles.length} / ${PLAYSTYLE_LIMIT}`;
+}
+
 function handleJobSelection(jobId, isChecked) {
   if (isChecked) {
-    if (selectedJobs.length >= 7) {
-      alert("JOBは最大7個まで選択可能です。");
-      const cb = document.getElementById(`job-check-${jobId}`);
-      if (cb) cb.checked = false;
-      return;
-    }
+    if (selectedJobs.length >= JOB_LIMIT) return; // Safety guard
     if (!selectedJobs.includes(jobId)) selectedJobs.push(jobId);
     if (!mainJobId) setMainJob(jobId);
   } else {
     selectedJobs = selectedJobs.filter(id => id !== jobId);
     if (mainJobId === jobId) mainJobId = selectedJobs.length > 0 ? selectedJobs[0] : null;
   }
+  updateJobCheckboxStates();
   updateCardJobsPreview();
 }
 
@@ -319,16 +338,12 @@ function updateCardJobsPreview() {
 // Playstyles
 function handlePlaystyleSelection(styleId, isChecked) {
   if (isChecked) {
-    if (selectedPlaystyles.length >= 6) {
-      alert("プレイスタイルは最大6個まで選択可能です。");
-      const cb = document.getElementById(`playstyle-check-${styleId}`);
-      if (cb) cb.checked = false;
-      return;
-    }
+    if (selectedPlaystyles.length >= PLAYSTYLE_LIMIT) return; // Safety guard
     if (!selectedPlaystyles.includes(styleId)) selectedPlaystyles.push(styleId);
   } else {
     selectedPlaystyles = selectedPlaystyles.filter(id => id !== styleId);
   }
+  updatePlaystyleCheckboxStates();
   updateCardPlaystylesPreview();
 }
 
