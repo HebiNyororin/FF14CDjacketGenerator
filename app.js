@@ -39,19 +39,19 @@ const jobs = [
 
 // Playstyles
 const playstyles = [
-  { id: "main-scenario",  name: "メインシナリオ" },
-  { id: "dungeons",       name: "ダンジョン" },
-  { id: "extreme",        name: "極" },
-  { id: "savage",         name: "零式" },
-  { id: "ultimate",       name: "絶" },
-  { id: "casual",         name: "カジュアル" },
-  { id: "gpose",          name: "GPose / SS" },
-  { id: "housing",        name: "ハウジング" },
-  { id: "glamour",        name: "グラマー / ミラプリ" },
-  { id: "gather-craft",   name: "採集 / 製作" },
-  { id: "gold-saucer",    name: "ゴールドソーサー" },
-  { id: "roleplay",       name: "ロールプレイ" },
-  { id: "chatting",       name: "交流 / チャット" },
+  { id: "main-scenario",  name: "Main Story" },
+  { id: "dungeons",       name: "Dungeons" },
+  { id: "extreme",        name: "Extreme" },
+  { id: "savage",         name: "Savage" },
+  { id: "ultimate",       name: "Ultimate" },
+  { id: "casual",         name: "Casual" },
+  { id: "gpose",          name: "GPose / Screenshots" },
+  { id: "housing",        name: "Housing" },
+  { id: "glamour",        name: "Glamour/Mirapri" },
+  { id: "gather-craft",   name: "Gathering / Crafting" },
+  { id: "gold-saucer",    name: "Gold Saucer" },
+  { id: "roleplay",       name: "Roleplay" },
+  { id: "chatting",       name: "Social / Chat" },
   { id: "pvp",            name: "PvP" }
 ];
 
