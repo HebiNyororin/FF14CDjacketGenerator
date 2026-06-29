@@ -103,6 +103,10 @@ const toggleTextShadow = document.getElementById("toggle-text-shadow");
 
 const btnDownload = document.getElementById("btn-download");
 const cdComposition = document.getElementById("cd-composition");
+const btnShareX = document.getElementById("btn-share-x");
+const shareModal = document.getElementById("share-modal");
+const modalBtnOpenX = document.getElementById("modal-btn-open-x");
+const modalBtnClose = document.getElementById("modal-btn-close");
 
 // --- Initialization ---
 
@@ -499,6 +503,67 @@ btnDownload.addEventListener("click", async () => {
     btnDownload.innerHTML = originalBtnText;
   });
 });
+
+// --- Share to X (Twitter) ---
+if (btnShareX) {
+  // Modal buttons
+  if (modalBtnClose) {
+    modalBtnClose.addEventListener("click", () => {
+      shareModal.style.display = "none";
+    });
+  }
+  if (modalBtnOpenX) {
+    modalBtnOpenX.addEventListener("click", () => {
+      const shareText = "「FF14CDjacketGenerator」でCDジャケット風キャラクターカードを作成しました！\n";
+      const hashtags = "FF14CDjacketGenerator,FF14キャラクターカード";
+      const pageUrl = "https://hebinyororin.github.io/FF14CDjacketGenerator/";
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}&hashtags=${encodeURIComponent(hashtags)}`;
+      window.open(shareUrl, "_blank");
+      shareModal.style.display = "none"; // Close modal after opening X
+    });
+  }
+
+  btnShareX.addEventListener("click", () => {
+    const origText = btnShareX.innerHTML;
+    btnShareX.disabled = true;
+    btnShareX.innerHTML = "画像コピー中...";
+
+    const scaleWrapper = document.querySelector('.preview-scale-wrapper');
+    const origTransform = scaleWrapper ? scaleWrapper.style.transform : "";
+    if (scaleWrapper) scaleWrapper.style.transform = "none";
+
+    modernScreenshot.domToBlob(cdComposition, {
+      scale: 2,
+      width: 900,
+      height: 900,
+      style: {
+        transform: "none",
+        margin: "0",
+        padding: "0"
+      }
+    }).then(blob => {
+      if (scaleWrapper) scaleWrapper.style.transform = origTransform;
+
+      // Copy image to clipboard so user can simply paste it on X
+      navigator.clipboard.write([
+        new ClipboardItem({ "image/png": blob })
+      ]).then(() => {
+        // Show modal overlays (contains user instructions) instead of alert dialog
+        shareModal.style.display = "flex";
+      }).catch(err => {
+        console.error("Clipboard copy failed:", err);
+        shareModal.style.display = "flex";
+      });
+    }).catch(err => {
+      if (scaleWrapper) scaleWrapper.style.transform = origTransform;
+      console.error("Failed to generate image for share:", err);
+      shareModal.style.display = "flex";
+    }).finally(() => {
+      btnShareX.disabled = false;
+      btnShareX.innerHTML = origText;
+    });
+  });
+}
 
 // Run Init
 window.addEventListener("DOMContentLoaded", () => {

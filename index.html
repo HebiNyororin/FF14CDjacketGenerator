@@ -223,13 +223,36 @@
       </div>
       </div>
 
-      <button id="btn-download" class="action-btn">Save CD Jacket</button>
+      <div class="actions-wrapper" style="display: flex; flex-direction: column; gap: 8px; margin-top: 20px; align-items: center; width: 100%;">
+        <div style="display: flex; gap: 12px; width: 100%;">
+          <button id="btn-download" class="action-btn" style="flex: 1; margin-top: 0;">💾 CDジャケットを保存</button>
+          <button id="btn-share-x" class="action-btn share-btn" style="flex: 1; margin-top: 0; background: #000000; color: #ffffff; border: 1px solid #333;">𝕏 でポストする</button>
+        </div>
+        <p style="font-size: 10px; color: #777; margin: 4px 0 0 0; text-align: center; line-height: 1.5; width: 100%;">
+          ※画像クリップボードコピー＆貼り付け機能はPC版限定です。<br>スマートフォンは「保存」後に𝕏の画像添付ボタンから選択してください。
+        </p>
+      </div>
     </section>
   </main>
 
   <footer>
     <p>&copy; 2026 FF14 CD Jacket Generator. All games, logos, and characters are trademarks of Square Enix.</p>
   </footer>
+
+  <!-- Share Modal Dialog -->
+  <div id="share-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <h3 class="modal-title">𝕏 にポストする準備ができました！</h3>
+      <p class="modal-desc">
+        カード画像が自動的に<strong>クリップボードにコピー</strong>されました。<br><br>
+        下記の「𝕏 を開く」ボタンから投稿画面へ進み、投稿欄で<strong>「貼り付け（Ctrl+V / Cmd+V）」</strong>を実行すると、画像を直接添付してポストできます！
+      </p>
+      <div class="modal-actions">
+        <button id="modal-btn-open-x" class="modal-btn primary">𝕏 を開く</button>
+        <button id="modal-btn-close" class="modal-btn secondary">閉じる</button>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js?v=2"></script>
 </body>
