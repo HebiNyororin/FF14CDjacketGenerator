@@ -577,14 +577,14 @@ footer {
 
 
 @media (max-width: 1000px) {
-  /* ノッチ・ステータスバーを隠すための固定バー */
+  /* ノッチ・ステータスバーを完全に隠すための固定バー */
   .safe-area-top-bar {
     display: block;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: env(safe-area-inset-top, 0px);
+    height: max(env(safe-area-inset-top, 0px), 47px);
     background: var(--bg-color);
     z-index: 1000;
     pointer-events: none;
@@ -592,7 +592,7 @@ footer {
 
   /* ヘッダーは固定せず、初回ノッチ重なり防止の余白を設定 */
   header {
-    padding-top: calc(0.8rem + env(safe-area-inset-top, 0px));
+    padding-top: calc(0.8rem + max(env(safe-area-inset-top, 0px), 47px));
   }
 
   .container {
@@ -604,7 +604,7 @@ footer {
   .preview-container {
     order: -1;
     position: sticky;
-    top: env(safe-area-inset-top, 0px);
+    top: max(env(safe-area-inset-top, 0px), 47px);
     z-index: 50;
     background: var(--bg-color);
     padding-bottom: 4px;
