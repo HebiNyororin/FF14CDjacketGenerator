@@ -578,43 +578,21 @@ footer {
   /* プレビューを先頭に並べ替え（HTML順序を変えずにCSSで制御） */
   .preview-container {
     order: -1;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: var(--bg-color);
-    padding-bottom: 4px;
-    /* ボタンエリアは fixed になるので actions-wrapper は非表示にする */
-  }
-
-  /* actions-wrapper をプレビューコンテナ内では非表示にする */
-  .preview-container .actions-wrapper {
-    display: none !important;
   }
 
   .panel {
     flex: none;
     max-height: none;
-    /* 画面最下部の固定ボタン分の余白を確保 */
-    padding-bottom: 110px;
   }
 
-  /* 保存・ポストボタンを画面最下部に固定（body直下に移動済み） */
+  /* スマホ専用アクションバー：ページ末尾に通常配置 */
   #mobile-actions-bar {
     display: flex !important;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(245, 245, 247, 0.96);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 10px 16px 14px;
-    box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.13);
-    z-index: 200;
-    box-sizing: border-box;
     flex-direction: column;
     gap: 8px;
     align-items: center;
+    padding: 16px;
+    background: var(--bg-color);
   }
 
   #mobile-actions-bar .actions-row {

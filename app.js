@@ -650,8 +650,8 @@ function updateFluidScale() {
   let scale = 1;
   
   if (isMobile) {
-    // Mobile layout: panel is below, so available width is window - padding
-    scale = (window.innerWidth - 50) / 900;
+    // Mobile layout: panel is below, so available width is window - padding (×0.8 for compact preview)
+    scale = (window.innerWidth - 50) / 900 * 0.8;
   } else {
     // Desktop layout: panel is side-by-side, so available width is window - panel(350) - gap/padding(100)
     scale = (window.innerWidth - 450) / 900;
