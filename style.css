@@ -47,14 +47,20 @@ body {
   min-height: 100vh;
 }
 
+/* Safe Area Top Bar */
+.safe-area-top-bar {
+  display: none;
+}
+
 header {
   text-align: center;
-  padding: 1.5rem 1rem;
+  padding: 0.8rem 1rem;
   background: var(--panel-bg);
   border-bottom: 1px solid var(--border-color);
 }
-header h1 { margin: 0; font-size: 1.5rem; color: var(--accent); }
-header p { margin: 0.5rem 0 0; font-size: 0.9rem; color: #666; }
+header h1 { margin: 0; font-size: 1.2rem; color: var(--accent); }
+header p { margin: 0.3rem 0 0; font-size: 0.8rem; color: #666; }
+
 
 .container {
   display: flex;
@@ -571,28 +577,34 @@ footer {
 
 
 @media (max-width: 1000px) {
-  /* ヘッダーを画面上部に固定＋ステータスバー／Dynamic Island対応 */
-  header {
+  /* ノッチ・ステータスバーを隠すための固定バー */
+  .safe-area-top-bar {
+    display: block;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
-    padding-top: env(safe-area-inset-top, 0px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    height: env(safe-area-inset-top, 0px);
+    background: var(--bg-color);
+    z-index: 1000;
+    pointer-events: none;
   }
 
-  /* ヘッダー固定分の下広げ */
+  /* ヘッダーは固定せず、初回ノッチ重なり防止の余白を設定 */
+  header {
+    padding-top: calc(0.8rem + env(safe-area-inset-top, 0px));
+  }
+
   .container {
     flex-direction: column;
-    padding-top: var(--mobile-header-height);
+    padding-top: 1rem;
   }
 
-  /* プレビューを先頭に並べ替え（HTML順序を変えずにCSSで制御） */
+  /* プレビューを先頭に並べ替え＆ノッチ下で固定 */
   .preview-container {
     order: -1;
     position: sticky;
-    top: var(--mobile-header-height);
+    top: env(safe-area-inset-top, 0px);
     z-index: 50;
     background: var(--bg-color);
     padding-bottom: 4px;

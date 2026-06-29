@@ -609,24 +609,8 @@ window.addEventListener("DOMContentLoaded", () => {
   updateColors(); // ensure initial color setup
   updateFluidScale();
   initMobileActionsBar();
-  updateMobileHeaderOffset();
 });
 
-// --- Mobile Header Offset (for sticky positioning below fixed header) ---
-function updateMobileHeaderOffset() {
-  const headerEl = document.querySelector('header');
-  if (!headerEl) return;
-  // requestAnimationFrame ensures fixed header is already rendered
-  requestAnimationFrame(() => {
-    if (window.innerWidth <= 1000) {
-      const h = headerEl.getBoundingClientRect().height;
-      document.documentElement.style.setProperty('--mobile-header-height', h + 'px');
-    } else {
-      document.documentElement.style.setProperty('--mobile-header-height', '0px');
-    }
-  });
-}
-window.addEventListener('resize', updateMobileHeaderOffset);
 
 // --- Mobile Actions Bar ---
 function initMobileActionsBar() {
