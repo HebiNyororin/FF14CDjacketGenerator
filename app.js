@@ -268,6 +268,12 @@ document.querySelectorAll('input[name="font"]').forEach(radio => {
 // Jobs
 function handleJobSelection(jobId, isChecked) {
   if (isChecked) {
+    if (selectedJobs.length >= 7) {
+      alert("JOBは最大7個まで選択可能です。");
+      const cb = document.getElementById(`job-check-${jobId}`);
+      if (cb) cb.checked = false;
+      return;
+    }
     if (!selectedJobs.includes(jobId)) selectedJobs.push(jobId);
     if (!mainJobId) setMainJob(jobId);
   } else {
@@ -311,8 +317,17 @@ function updateCardJobsPreview() {
 
 // Playstyles
 function handlePlaystyleSelection(styleId, isChecked) {
-  if (isChecked && !selectedPlaystyles.includes(styleId)) selectedPlaystyles.push(styleId);
-  else if (!isChecked) selectedPlaystyles = selectedPlaystyles.filter(id => id !== styleId);
+  if (isChecked) {
+    if (selectedPlaystyles.length >= 6) {
+      alert("プレイスタイルは最大6個まで選択可能です。");
+      const cb = document.getElementById(`playstyle-check-${styleId}`);
+      if (cb) cb.checked = false;
+      return;
+    }
+    if (!selectedPlaystyles.includes(styleId)) selectedPlaystyles.push(styleId);
+  } else {
+    selectedPlaystyles = selectedPlaystyles.filter(id => id !== styleId);
+  }
   updateCardPlaystylesPreview();
 }
 
@@ -545,15 +560,20 @@ if (btnShareX) {
       if (scaleWrapper) scaleWrapper.style.transform = origTransform;
 
       // Copy image to clipboard so user can simply paste it on X
-      navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob })
-      ]).then(() => {
-        // Show modal overlays (contains user instructions) instead of alert dialog
+      if (navigator.clipboard && navigator.clipboard.write) {
+        navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob })
+        ]).then(() => {
+          // Show modal overlays (contains user instructions) instead of alert dialog
+          shareModal.style.display = "flex";
+        }).catch(err => {
+          console.error("Clipboard copy failed:", err);
+          shareModal.style.display = "flex";
+        });
+      } else {
+        console.warn("Clipboard API not supported in this environment");
         shareModal.style.display = "flex";
-      }).catch(err => {
-        console.error("Clipboard copy failed:", err);
-        shareModal.style.display = "flex";
-      });
+      }
     }).catch(err => {
       if (scaleWrapper) scaleWrapper.style.transform = origTransform;
       console.error("Failed to generate image for share:", err);
