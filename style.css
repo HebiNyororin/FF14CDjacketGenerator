@@ -578,6 +578,11 @@ footer {
   /* プレビューを先頭に並べ替え（HTML順序を変えずにCSSで制御） */
   .preview-container {
     order: -1;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg-color);
+    padding-bottom: 4px;
   }
 
   .panel {
