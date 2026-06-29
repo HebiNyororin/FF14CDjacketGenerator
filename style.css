@@ -563,10 +563,45 @@ footer {
   color: #888;
 }
 
+
 @media (max-width: 1000px) {
-  .container { flex-direction: column-reverse; }
-  .panel { flex: none; max-height: none; }
+  .container {
+    flex-direction: column-reverse;
+    /* パネルとプレビューを縦並びに（column-reverseでプレビューが上に来る） */
+  }
+  .panel {
+    flex: none;
+    max-height: none;
+    /* ボタン固定分の余白を確保 */
+    padding-bottom: 90px;
+  }
+
+  /* プレビューを画面上部に常時固定 */
+  .preview-container {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg-color);
+    /* ボタンがfixedになるのでpreview-container内の余白を縮小 */
+    padding-bottom: 4px;
+  }
+
+  /* 保存・ポストボタンを画面最下部に固定 */
+  .preview-container .actions-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(245, 245, 247, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 10px 16px 14px;
+    box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.13);
+    z-index: 200;
+    box-sizing: border-box;
+  }
 }
+
 
 /* =============================================
    SHARE MODAL (ポップアップダイアログ)
