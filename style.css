@@ -584,7 +584,7 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-    height: env(safe-area-inset-top, 0px);
+    height: calc(env(safe-area-inset-top, 0px) + 3px);
     background: var(--bg-color);
     z-index: 1000;
     pointer-events: none;
